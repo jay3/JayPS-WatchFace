@@ -12,6 +12,13 @@ PBL_APP_INFO(MY_UUID,
              RESOURCE_ID_IMAGE_MENU_ICON,
              APP_INFO_STANDARD_APP);
 
+#define ROCKSHOT true
+
+#if ROCKSHOT
+#include "rockshot.h"
+#endif
+
+
 enum {
   STATE_CHANGED =0x0,
   SPEED_TEXT = 0x1,     // TUPLE_CSTR
@@ -714,7 +721,10 @@ void handle_init(AppContextRef ctx) {
                 sync_tuple_changed_callback, sync_error_callback, NULL);
 
   window_stack_push(window, true /* Animated */);
-
+  
+  #if ROCKSHOT
+    rockshot_init(ctx);
+  #endif
 }
 static void handle_deinit(AppContextRef c) {
    app_sync_deinit(&s_data.sync);
@@ -761,9 +771,12 @@ void pbl_main(void *params) {
     .messaging_info = {
       .buffer_sizes = {
         .inbound = 200,
-        .outbound = 16,
+        .outbound = 256,
       }
     }
   };
+  #if ROCKSHOT
+    rockshot_main(&handlers);
+  #endif
   app_event_loop(params, &handlers);
 }
