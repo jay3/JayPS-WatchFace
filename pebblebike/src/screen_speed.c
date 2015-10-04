@@ -46,8 +46,7 @@ static AppTimer *rotation_timer;
 void speed_layer_update_proc(Layer *layer, GContext* ctx) {
   SpeedLayer *speed_layer = &s_data.screenA_layer.speed_layer;
 
-  //graphics_context_set_fill_color(ctx, GColorRed);
-  graphics_context_set_fill_color(ctx, GColorBlack);
+  graphics_context_set_fill_color(ctx, BG_COLOR_SPEED_DATA);
   GRect bounds = layer_get_frame(speed_layer->layer);
   graphics_fill_rect(ctx, bounds, 0, GCornerNone);
 
@@ -144,7 +143,7 @@ void page_speed_update_proc(Layer *page_speed, GContext* ctx) {
 
 void line_layer_update_callback(Layer *me, GContext* ctx) {
   (void)me;
-  graphics_context_set_stroke_color(ctx, GColorBlack);
+  graphics_context_set_stroke_color(ctx, COLOR_LINES);
   graphics_draw_line(ctx, GPoint(PAGE_OFFSET_X + PAGE_W / 2, PAGE_SPEED_TOP_H + 2), GPoint(PAGE_OFFSET_X + PAGE_W / 2, PAGE_H - 2));
 }
 void screen_speed_layer_init(Window* window) {
@@ -170,7 +169,7 @@ void screen_speed_layer_init(Window* window) {
   // s_data.screenA_layer.field_top.title_layer NOT used
 
   s_data.screenA_layer.field_top.unit_layer = text_layer_create(GRect(PAGE_OFFSET_X, PAGE_SPEED_TOP_H - 24, PAGE_W, 22));
-  set_layer_attr_full(s_data.screenA_layer.field_top.unit_layer, s_data.unitsSpeedOrHeartRate, font_18, GTextAlignmentCenter, GColorWhite, GColorBlack, s_data.page_speed);
+  set_layer_attr_full(s_data.screenA_layer.field_top.unit_layer, s_data.unitsSpeedOrHeartRate, font_18, GTextAlignmentCenter, COLOR_SPEED_UNITS, BG_COLOR_SPEED_UNITS, s_data.page_speed);
 
   // s_data.screenA_layer.field_top.data_layer NOT used
   // END top
@@ -178,24 +177,24 @@ void screen_speed_layer_init(Window* window) {
 
   // BEGIN bottom left "distance"
   s_data.screenA_layer.field_bottom_left.title_layer = text_layer_create(GRect(PAGE_OFFSET_X + 1, PAGE_SPEED_TOP_H + 2, PAGE_W / 2 - 2, 16));
-  set_layer_attr_full(s_data.screenA_layer.field_bottom_left.title_layer, "distance", font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
+  set_layer_attr_full(s_data.screenA_layer.field_bottom_left.title_layer, "distance", font_12, GTextAlignmentCenter, COLOR_TITLE, BG_COLOR_TITLE, s_data.page_speed);
 
   s_data.screenA_layer.field_bottom_left.unit_layer = text_layer_create(GRect(PAGE_OFFSET_X + 1, PAGE_SPEED_TOP_H + 48, PAGE_W / 2 - 2, 14));
-  set_layer_attr_full(s_data.screenA_layer.field_bottom_left.unit_layer, s_data.unitsDistance, font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
+  set_layer_attr_full(s_data.screenA_layer.field_bottom_left.unit_layer, s_data.unitsDistance, font_12, GTextAlignmentCenter, COLOR_UNITS, BG_COLOR_UNITS, s_data.page_speed);
 
   s_data.screenA_layer.field_bottom_left.data_layer = text_layer_create(GRect(PAGE_OFFSET_X + 1, PAGE_SPEED_TOP_H + 22, PAGE_W / 2 - 2, 26));
-  set_layer_attr_full(s_data.screenA_layer.field_bottom_left.data_layer, s_data.distance, font_22_24, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
+  set_layer_attr_full(s_data.screenA_layer.field_bottom_left.data_layer, s_data.distance, font_22_24, GTextAlignmentCenter, COLOR_DATA, BG_COLOR_DATA, s_data.page_speed);
   // END bottom left
 
   // BEGIN bottom right "avg"
   s_data.screenA_layer.field_bottom_right.title_layer = text_layer_create(GRect(PAGE_OFFSET_X + PAGE_W / 2 + 2, PAGE_SPEED_TOP_H + 2, PAGE_W / 2 - 2, 16));
-  set_layer_attr_full(s_data.screenA_layer.field_bottom_right.title_layer, "avg speed", font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
+  set_layer_attr_full(s_data.screenA_layer.field_bottom_right.title_layer, "avg speed", font_12, GTextAlignmentCenter, COLOR_TITLE, BG_COLOR_TITLE, s_data.page_speed);
 
   s_data.screenA_layer.field_bottom_right.unit_layer = text_layer_create(GRect(PAGE_OFFSET_X + PAGE_W / 2 + 2, PAGE_SPEED_TOP_H + 48, PAGE_W / 2 - 2, 15));
-  set_layer_attr_full(s_data.screenA_layer.field_bottom_right.unit_layer, s_data.unitsSpeed, font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
+  set_layer_attr_full(s_data.screenA_layer.field_bottom_right.unit_layer, s_data.unitsSpeed, font_12, GTextAlignmentCenter, COLOR_UNITS, BG_COLOR_UNITS, s_data.page_speed);
 
   s_data.screenA_layer.field_bottom_right.data_layer = text_layer_create(GRect(PAGE_OFFSET_X + PAGE_W / 2 + 2, PAGE_SPEED_TOP_H + 22, PAGE_W / 2 - 2, 26));
-  set_layer_attr_full(s_data.screenA_layer.field_bottom_right.data_layer, s_data.avgspeed, font_22_24, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
+  set_layer_attr_full(s_data.screenA_layer.field_bottom_right.data_layer, s_data.avgspeed, font_22_24, GTextAlignmentCenter, COLOR_DATA, BG_COLOR_DATA, s_data.page_speed);
   // END bottom right
 
   layer_set_hidden(s_data.page_speed, false);

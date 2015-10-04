@@ -68,15 +68,15 @@ void field_layer_init(Layer* parent, FieldLayer* field_layer, int16_t x, int16_t
 
   // title
   field_layer->title_layer = text_layer_create(GRect(1, 2, w - 2, 14));
-  set_layer_attr_full(field_layer->title_layer, title_text, font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, field_layer->main_layer);
+  set_layer_attr_full(field_layer->title_layer, title_text, font_12, GTextAlignmentCenter, COLOR_TITLE, BG_COLOR_TITLE, field_layer->main_layer);
 
   // data
   field_layer->data_layer = text_layer_create(GRect(1, 21, w - 2, 32));
-  set_layer_attr_full(field_layer->data_layer, data_text, font_22_24, GTextAlignmentCenter, GColorBlack, GColorWhite, field_layer->main_layer);
+  set_layer_attr_full(field_layer->data_layer, data_text, font_22_24, GTextAlignmentCenter, COLOR_DATA, BG_COLOR_DATA, field_layer->main_layer);
 
   // unit
   field_layer->unit_layer = text_layer_create(GRect(1, h - 14, w - 2, 14));
-  set_layer_attr_full(field_layer->unit_layer, unit_text, font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, field_layer->main_layer);
+  set_layer_attr_full(field_layer->unit_layer, unit_text, font_12, GTextAlignmentCenter, COLOR_UNITS, BG_COLOR_UNITS, field_layer->main_layer);
 
 }
 void field_layer_deinit(FieldLayer* field_layer) {
@@ -94,8 +94,8 @@ void topbar_layer_init(Window* window) {
 
   // time (centered in top bar)
   s_data.topbar_layer.time_layer = text_layer_create(GRect(PAGE_OFFSET_X, 0, PAGE_W, TOPBAR_HEIGHT));
-  text_layer_set_background_color(s_data.topbar_layer.time_layer, GColorRed);
-  set_layer_attr_full(s_data.topbar_layer.time_layer, s_data.time, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_16)), GTextAlignmentCenter, GColorWhite, GColorBlack, window_get_root_layer(window));
+  text_layer_set_background_color(s_data.topbar_layer.time_layer, COLOR_TOP_BAR);
+  set_layer_attr_full(s_data.topbar_layer.time_layer, s_data.time, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_16)), GTextAlignmentCenter, COLOR_TOP_BAR, BG_COLOR_TOP_BAR, window_get_root_layer(window));
 
   // bluetooth icon
   s_data.topbar_layer.bluetooth_image = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BLUETOOTH);
@@ -106,7 +106,7 @@ void topbar_layer_init(Window* window) {
 
   // accuracy (1/3, right)
   s_data.topbar_layer.accuracy_layer = text_layer_create(GRect(PAGE_W - 18 - PBL_IF_ROUND_ELSE(15, 0), 0, 18, TOPBAR_HEIGHT));
-  set_layer_attr_full(s_data.topbar_layer.accuracy_layer, s_data.accuracy, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_16)), GTextAlignmentRight, GColorWhite, GColorBlack, window_get_root_layer(window));
+  set_layer_attr_full(s_data.topbar_layer.accuracy_layer, s_data.accuracy, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_16)), GTextAlignmentRight, COLOR_TOP_BAR, BG_COLOR_TOP_BAR, window_get_root_layer(window));
 
 }
 
@@ -152,7 +152,7 @@ void action_bar_init(Window* window) {
   action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, next_button);
   //action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, reset_buttonp);
   action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, menu_button);
-  action_bar_layer_set_background_color(action_bar, GColorGreen);
+  action_bar_layer_set_background_color(action_bar, COLOR_ACTION_BAR);
 }
 void action_bar_deinit() {
  action_bar_layer_destroy(action_bar);

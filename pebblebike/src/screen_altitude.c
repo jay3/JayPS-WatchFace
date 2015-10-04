@@ -13,7 +13,7 @@
 #endif
 
 void page_altitude_update_proc(Layer *page_altitude, GContext* ctx) {
-  graphics_context_set_stroke_color(ctx, GColorBlack);
+  graphics_context_set_stroke_color(ctx, COLOR_LINES);
 
   // vertical line
   graphics_draw_line(ctx, GPoint(PAGE_OFFSET_X + PAGE_W / 2, 0), GPoint(PAGE_OFFSET_X + PAGE_W / 2, SCREEN_H));

@@ -155,8 +155,7 @@ static void init(void) {
   buttons_init();
 
   s_data.window = window_create();
-  //window_set_background_color(s_data.window, GColorBlue);
-  window_set_background_color(s_data.window, GColorWhite);
+  window_set_background_color(s_data.window, BG_COLOR_WINDOW);
 # ifdef PBL_PLATFORM_APLITE
   window_set_fullscreen(s_data.window, true);
 # endif

@@ -1,6 +1,12 @@
 #ifndef PEBBLEBIKE_H
 #define PEBBLEBIKE_H
 
+#include "pebble.h"
+
+#ifndef PBL_IF_ROUND_ELSE
+  #define PBL_IF_ROUND_ELSE(if_true, if_false) (if_false)
+#endif
+
 enum {
     MSG_LOCATION_DATA = 0x13, // TUPLE_BYTE_ARRAY
     STATE_CHANGED = 0x14,
@@ -111,6 +117,58 @@ enum {
 //#define PAGE_GRECT GRect(PAGE_OFFSET_X, PAGE_OFFSET_Y, PAGE_W, PAGE_H)
 #define PAGE_GRECT GRect(0, PAGE_OFFSET_Y, SCREEN_W, PAGE_H)
 #define SCREEN_GRECT GRect(0, 0, SCREEN_W, SCREEN_H)
+
+//#ifdef PBL_PLATFORM_CHALK
+//  #define DEBUG_COLOR true
+//#endif
+
+
+#ifdef PBL_COLOR
+  //darken to lighten
+  #define BG_COLOR1 GColorBlack
+  #define BG_COLOR2 GColorBlueMoon
+  #define COLOR1 GColorOxfordBlue
+  #define COLOR2 GColorWhite
+  #define COLOR3 GColorWhite
+#else
+  #define BG_COLOR1 GColorBlack
+  #define BG_COLOR2 GColorWhite
+  #define COLOR1 GColorBlack
+  #define COLOR2 GColorBlack
+  #define COLOR3 GColorWhite
+#endif
+#define BG_COLOR_WINDOW BG_COLOR2
+
+#define COLOR_ACTION_BAR GColorBlack
+
+#define COLOR_TOP_BAR COLOR3
+#define BG_COLOR_TOP_BAR BG_COLOR1
+
+#define COLOR_SPEED_UNITS COLOR3
+#define BG_COLOR_SPEED_UNITS BG_COLOR1
+#define BG_COLOR_SPEED_DATA BG_COLOR1
+
+#define BG_COLOR_TITLE BG_COLOR_WINDOW
+#define BG_COLOR_DATA BG_COLOR_WINDOW
+#define BG_COLOR_UNITS BG_COLOR_WINDOW
+#define COLOR_TITLE COLOR2
+#define COLOR_DATA COLOR2
+#define COLOR_UNITS COLOR2
+#define COLOR_LINES COLOR2
+
+#ifdef DEBUG_COLOR
+  #undef BG_COLOR_TITLE
+  #define BG_COLOR_TITLE GColorRed
+  #undef BG_COLOR_DATA
+  #define BG_COLOR_DATA GColorRed
+  #undef BG_COLOR_UNITS
+  #define BG_COLOR_UNITS GColorRed
+  #undef BG_COLOR_WINDOW
+  #define BG_COLOR_WINDOW GColorYellow
+#endif
+
+
+
 
 
 #define SPEED_UNIT_IMPERIAL "mph"
