@@ -87,13 +87,14 @@ void field_layer_deinit(FieldLayer* field_layer) {
 }
 
 void topbar_layer_init(Window* window) {
-  int16_t w = SCREEN_W - MENU_WIDTH;
+//  int16_t w = SCREEN_W - MENU_WIDTH;
 
-  s_data.topbar_layer.layer = layer_create(GRect(0,0,w,SCREEN_H));
+  s_data.topbar_layer.layer = layer_create(GRect(0, 0, SCREEN_W, TOPBAR_HEIGHT));
   layer_add_child(window_get_root_layer(window), s_data.topbar_layer.layer);
 
   // time (centered in top bar)
-  s_data.topbar_layer.time_layer = text_layer_create(GRect(0,0,w,TOPBAR_HEIGHT));
+  s_data.topbar_layer.time_layer = text_layer_create(GRect(PAGE_OFFSET_X, 0, PAGE_W, TOPBAR_HEIGHT));
+  text_layer_set_background_color(s_data.topbar_layer.time_layer, GColorRed);
   set_layer_attr_full(s_data.topbar_layer.time_layer, s_data.time, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_16)), GTextAlignmentCenter, GColorWhite, GColorBlack, window_get_root_layer(window));
 
   // bluetooth icon
@@ -104,7 +105,7 @@ void topbar_layer_init(Window* window) {
   layer_set_hidden(bitmap_layer_get_layer(s_data.topbar_layer.bluetooth_layer), !bluetooth_connection_service_peek());
 
   // accuracy (1/3, right)
-  s_data.topbar_layer.accuracy_layer = text_layer_create(GRect(w-18,0,18,TOPBAR_HEIGHT));
+  s_data.topbar_layer.accuracy_layer = text_layer_create(GRect(PAGE_W - 18 - PBL_IF_ROUND_ELSE(15, 0), 0, 18, TOPBAR_HEIGHT));
   set_layer_attr_full(s_data.topbar_layer.accuracy_layer, s_data.accuracy, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_16)), GTextAlignmentRight, GColorWhite, GColorBlack, window_get_root_layer(window));
 
 }
@@ -152,6 +153,8 @@ void action_bar_init(Window* window) {
   action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, next_button);
   //action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, reset_buttonp);
   action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, menu_button);
+  action_bar_layer_set_background_color(action_bar, GColorGreen);
+  //layer_set_hidden(action_bar_layer_get_layer(action_bar), true);
 }
 void action_bar_deinit() {
  action_bar_layer_destroy(action_bar);

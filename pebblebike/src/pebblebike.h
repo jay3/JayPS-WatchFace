@@ -71,18 +71,45 @@ enum {
 #define DOT_WIDTH 15
 #define CHAR_HEIGHT 51
 
-#define CANVAS_WIDTH 144
-#ifdef PBL_PLATFORM_APLITE
-// 20+2
-#  define MENU_WIDTH (ACTION_BAR_WIDTH+2)
-#else
-// 30
-#  define MENU_WIDTH (ACTION_BAR_WIDTH)
-#endif
-#define TOPBAR_HEIGHT 18
 
-#define SCREEN_W 144
-#define SCREEN_H 168
+
+#define TOPBAR_HEIGHT 18
+#ifdef PBL_PLATFORM_CHALK
+  #define SCREEN_W 180
+  #define SCREEN_H 180
+  // 18
+  #define PAGE_OFFSET_X ((180-144)/2)
+  // 6
+  //#define PAGE_OFFSET_Y ((180-168)/2 - TOPBAR_HEIGHT)
+  #define PAGE_OFFSET_Y TOPBAR_HEIGHT
+#else
+  #define SCREEN_W 144
+  #define SCREEN_H 168
+  #define PAGE_OFFSET_X 0
+  #define PAGE_OFFSET_Y TOPBAR_HEIGHT
+#endif
+
+
+#ifdef PBL_PLATFORM_APLITE
+  // 20+2
+  #define MENU_WIDTH (ACTION_BAR_WIDTH+2)
+#else
+  #ifdef PBL_PLATFORM_CHALK
+    // 40 - 18 = 22
+    //#define MENU_WIDTH (ACTION_BAR_WIDTH-PAGE_OFFSET_X)
+    #define MENU_WIDTH 0
+  #else
+    // 30
+    #define MENU_WIDTH (ACTION_BAR_WIDTH)
+  #endif
+#endif
+
+#define PAGE_W  (144-MENU_WIDTH)
+#define PAGE_H (SCREEN_H-TOPBAR_HEIGHT)
+//#define PAGE_GRECT GRect(PAGE_OFFSET_X, PAGE_OFFSET_Y, PAGE_W, PAGE_H)
+#define PAGE_GRECT GRect(0, PAGE_OFFSET_Y, SCREEN_W, PAGE_H)
+#define SCREEN_GRECT GRect(0, 0, SCREEN_W, SCREEN_H)
+
 
 #define SPEED_UNIT_IMPERIAL "mph"
 #define SPEED_UNIT_METRIC "km/h"

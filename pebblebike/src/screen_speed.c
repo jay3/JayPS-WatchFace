@@ -46,8 +46,10 @@ static AppTimer *rotation_timer;
 void speed_layer_update_proc(Layer *layer, GContext* ctx) {
   SpeedLayer *speed_layer = &s_data.screenA_layer.speed_layer;
 
+  //graphics_context_set_fill_color(ctx, GColorRed);
   graphics_context_set_fill_color(ctx, GColorBlack);
-  graphics_fill_rect(ctx, layer_get_frame(speed_layer->layer), 0, GCornerNone);
+  GRect bounds = layer_get_frame(speed_layer->layer);
+  graphics_fill_rect(ctx, bounds, 0, GCornerNone);
 
   if (speed_layer->text && strlen(speed_layer->text) > 0) {
     
@@ -75,7 +77,7 @@ void speed_layer_update_proc(Layer *layer, GContext* ctx) {
     // get the size
     int size = (len - dots) * CHAR_WIDTH + dots * DOT_WIDTH;
 
-    int leftpos = (CANVAS_WIDTH - MENU_WIDTH - size) / 2;
+    int leftpos = PAGE_OFFSET_X + (PAGE_W - size) / 2;
 
     // clean up old layers
     for(int n=0; n < TOTAL_IMAGE_SLOTS; n++) {
@@ -134,21 +136,28 @@ void speed_layer_set_text(SpeedLayer *speed_layer, char *textdata) {
 void page_speed_update_proc(Layer *page_speed, GContext* ctx) {
   //vibes_short_pulse();
 }
+#ifdef PBL_PLATFORM_CHALK
+  #define PAGE_SPEED_TOP_H SCREEN_H / 2 - TOPBAR_HEIGHT + 10
+#else
+  #define PAGE_SPEED_TOP_H SCREEN_H / 2 - TOPBAR_HEIGHT + 20
+#endif
+
 void line_layer_update_callback(Layer *me, GContext* ctx) {
   (void)me;
   graphics_context_set_stroke_color(ctx, GColorBlack);
-  graphics_draw_line(ctx, GPoint(72 - MENU_WIDTH / 2, 90), GPoint(72 - MENU_WIDTH / 2, 160));
+  graphics_draw_line(ctx, GPoint(PAGE_OFFSET_X + PAGE_W / 2, PAGE_SPEED_TOP_H + 2), GPoint(PAGE_OFFSET_X + PAGE_W / 2, PAGE_H - 2));
 }
 void screen_speed_layer_init(Window* window) {
   s_data.screenA_layer.field_top.type = config.screenA_top_type;
   s_data.screenA_layer.field_bottom_left.type = config.screenA_bottom_left_type;
   s_data.screenA_layer.field_bottom_right.type = config.screenA_bottom_right_type;
 
-  s_data.page_speed = layer_create(GRect(0,TOPBAR_HEIGHT,CANVAS_WIDTH-MENU_WIDTH,SCREEN_H-TOPBAR_HEIGHT));
+  s_data.page_speed = layer_create(PAGE_GRECT);
   layer_set_update_proc(s_data.page_speed, page_speed_update_proc);
   layer_add_child(window_get_root_layer(window), s_data.page_speed);
 
-  speed_layer_init(&s_data.screenA_layer.speed_layer,GRect(0,0,CANVAS_WIDTH-MENU_WIDTH,84));
+  //speed_layer_init(&s_data.screenA_layer.speed_layer,GRect(0,0,PAGE_W,84));
+  speed_layer_init(&s_data.screenA_layer.speed_layer, GRect(0, 0, SCREEN_W, PAGE_SPEED_TOP_H));
   speed_layer_set_text(&s_data.screenA_layer.speed_layer, s_data.speed);
   layer_add_child(s_data.page_speed, s_data.screenA_layer.speed_layer.layer);
 
@@ -160,31 +169,32 @@ void screen_speed_layer_init(Window* window) {
   // BEGIN top "speed"
   // s_data.screenA_layer.field_top.title_layer NOT used
 
-  s_data.screenA_layer.field_top.unit_layer = text_layer_create(GRect(0, 58, CANVAS_WIDTH - MENU_WIDTH, 22));
+  s_data.screenA_layer.field_top.unit_layer = text_layer_create(GRect(PAGE_OFFSET_X, PAGE_SPEED_TOP_H - 24, PAGE_W, 22));
   set_layer_attr_full(s_data.screenA_layer.field_top.unit_layer, s_data.unitsSpeedOrHeartRate, font_18, GTextAlignmentCenter, GColorWhite, GColorBlack, s_data.page_speed);
 
   // s_data.screenA_layer.field_top.data_layer NOT used
   // END top
 
+
   // BEGIN bottom left "distance"
-  s_data.screenA_layer.field_bottom_left.title_layer = text_layer_create(GRect(2, 90, 66 - MENU_WIDTH / 2, 16));
+  s_data.screenA_layer.field_bottom_left.title_layer = text_layer_create(GRect(PAGE_OFFSET_X + 1, PAGE_SPEED_TOP_H + 2, PAGE_W / 2 - 2, 16));
   set_layer_attr_full(s_data.screenA_layer.field_bottom_left.title_layer, "distance", font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
 
-  s_data.screenA_layer.field_bottom_left.unit_layer = text_layer_create(GRect(2, 136, 66 - MENU_WIDTH / 2, 14));
+  s_data.screenA_layer.field_bottom_left.unit_layer = text_layer_create(GRect(PAGE_OFFSET_X + 1, PAGE_SPEED_TOP_H + 48, PAGE_W / 2 - 2, 14));
   set_layer_attr_full(s_data.screenA_layer.field_bottom_left.unit_layer, s_data.unitsDistance, font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
 
-  s_data.screenA_layer.field_bottom_left.data_layer = text_layer_create(GRect(1, 110, (SCREEN_W - MENU_WIDTH) / 2 - 2, 26));
+  s_data.screenA_layer.field_bottom_left.data_layer = text_layer_create(GRect(PAGE_OFFSET_X + 1, PAGE_SPEED_TOP_H + 22, PAGE_W / 2 - 2, 26));
   set_layer_attr_full(s_data.screenA_layer.field_bottom_left.data_layer, s_data.distance, font_22_24, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
   // END bottom left
 
   // BEGIN bottom right "avg"
-  s_data.screenA_layer.field_bottom_right.title_layer = text_layer_create(GRect(75 - MENU_WIDTH / 2, 90, 66 - MENU_WIDTH / 2, 16));
+  s_data.screenA_layer.field_bottom_right.title_layer = text_layer_create(GRect(PAGE_OFFSET_X + PAGE_W / 2 + 2, PAGE_SPEED_TOP_H + 2, PAGE_W / 2 - 2, 16));
   set_layer_attr_full(s_data.screenA_layer.field_bottom_right.title_layer, "avg speed", font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
 
-  s_data.screenA_layer.field_bottom_right.unit_layer = text_layer_create(GRect(75 - MENU_WIDTH / 2, 136, 66 - MENU_WIDTH / 2, 15));
+  s_data.screenA_layer.field_bottom_right.unit_layer = text_layer_create(GRect(PAGE_OFFSET_X + PAGE_W / 2 + 2, PAGE_SPEED_TOP_H + 48, PAGE_W / 2 - 2, 15));
   set_layer_attr_full(s_data.screenA_layer.field_bottom_right.unit_layer, s_data.unitsSpeed, font_12, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
 
-  s_data.screenA_layer.field_bottom_right.data_layer = text_layer_create(GRect((SCREEN_W - MENU_WIDTH) / 2 + 1, 110, (SCREEN_W - MENU_WIDTH) / 2 - 2, 26));
+  s_data.screenA_layer.field_bottom_right.data_layer = text_layer_create(GRect(PAGE_OFFSET_X + PAGE_W / 2 + 2, PAGE_SPEED_TOP_H + 22, PAGE_W / 2 - 2, 26));
   set_layer_attr_full(s_data.screenA_layer.field_bottom_right.data_layer, s_data.avgspeed, font_22_24, GTextAlignmentCenter, GColorBlack, GColorWhite, s_data.page_speed);
   // END bottom right
 
@@ -278,3 +288,4 @@ void screen_speed_start_rotation() {
   }
 }
 #endif
+
