@@ -89,20 +89,22 @@ enum {
   #define PAGE_OFFSET_Y TOPBAR_HEIGHT
 #endif
 
+// timer to hide action bar
+#define MENU_WIDTH 0
 
-#ifdef PBL_PLATFORM_APLITE
-  // 20+2
-  #define MENU_WIDTH (ACTION_BAR_WIDTH+2)
-#else
-  #ifdef PBL_PLATFORM_CHALK
-    // 40 - 18 = 22
-    //#define MENU_WIDTH (ACTION_BAR_WIDTH-PAGE_OFFSET_X)
-    #define MENU_WIDTH 0
-  #else
-    // 30
-    #define MENU_WIDTH (ACTION_BAR_WIDTH)
-  #endif
-#endif
+//#ifdef PBL_PLATFORM_APLITE
+//  // 20+2
+//  #define MENU_WIDTH (ACTION_BAR_WIDTH+2)
+//#else
+//  #ifdef PBL_PLATFORM_CHALK
+//    // 40 - 18 = 22
+//    //#define MENU_WIDTH (ACTION_BAR_WIDTH-PAGE_OFFSET_X)
+//    #define MENU_WIDTH 0
+//  #else
+//    // 30
+//    #define MENU_WIDTH (ACTION_BAR_WIDTH)
+//  #endif
+//#endif
 
 #define PAGE_W  (144-MENU_WIDTH)
 #define PAGE_H (SCREEN_H-TOPBAR_HEIGHT)

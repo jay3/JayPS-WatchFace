@@ -114,7 +114,6 @@ static void disconnect_timer_callback(void *data) {
   disconnect_timer = NULL;
   vibes_short_pulse();
 }
-
 void topbar_toggle_bluetooth_icon(bool connected) {
   layer_set_hidden(bitmap_layer_get_layer(s_data.topbar_layer.bluetooth_layer), !connected);
   if (connected) {
@@ -154,7 +153,6 @@ void action_bar_init(Window* window) {
   //action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, reset_buttonp);
   action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, menu_button);
   action_bar_layer_set_background_color(action_bar, GColorGreen);
-  //layer_set_hidden(action_bar_layer_get_layer(action_bar), true);
 }
 void action_bar_deinit() {
  action_bar_layer_destroy(action_bar);
