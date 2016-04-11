@@ -149,6 +149,7 @@ void bt_callback(bool connected) {
 }
 
 static void init(void) {
+  s_gpsdata.heartrate = 255; // no data at startup
 #ifdef DEBUG_FIELDS_SIZE
   strcpy(s_data.speed, "188.8");
   strcpy(s_data.distance, "88.8");
@@ -172,6 +173,8 @@ static void init(void) {
   strcpy(s_data.accuracy, "4");
   strcpy(s_data.steps, "7548");
   strcpy(s_data.elapsedtime, "1:15:28");
+  strcpy(s_data.heartrate, "157");
+  s_gpsdata.heartrate = 157;
   s_data.live = 1;
   s_data.state = STATE_START;
 #else
@@ -205,7 +208,6 @@ static void init(void) {
   font_roboto_bold_16 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_16));
 #endif
   font_roboto_bold_62 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_62));
-  s_gpsdata.heartrate = 255; // no data at startup
 
   // set default unit of measure
   change_units(UNITS_IMPERIAL, true);

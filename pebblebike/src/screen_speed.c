@@ -177,8 +177,10 @@ void screen_speed_show_speed(bool force_units) {
 #endif
   } else {
     copy_speed(s_data.speed, sizeof(s_data.speed), s_gpsdata.speed100);
+    ///@todo for hr zones in units
+    screen_speed_update_config(true);
     if (force_units) {
-      screen_speed_update_config(true);
+      //screen_speed_update_config(true);
     }
   }
 }

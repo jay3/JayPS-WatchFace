@@ -172,7 +172,28 @@ const char *field_get_units(uint8_t field) {
     case FIELD_ACCURACY: return "m"; break;
     case FIELD_HEARTRATE:
     case FIELD_HEARTRATE_DATA_AND_GRAPH:
-      return HEART_RATE_UNIT; break;
+      if (s_gpsdata.heartrate > 0 && s_gpsdata.heartrate != 255) {
+        uint8_t max_heartrate = 185;
+        //max_heartrate = 100;
+        int ratio = 100 * s_gpsdata.heartrate / max_heartrate;
+        LOG_DEBUG("heartrate=%d ratio=%d\n", s_gpsdata.heartrate, ratio);
+        if (ratio < 60) {
+          return "1 - Warm up / Recovery";
+        } else if (ratio < 70) {
+          // Weight control (fitness / fat burn)
+          return "2 - Aerobic Development";
+        } else if (ratio < 80) {
+          return "3 - Aerobic Endurance";
+        } else if (ratio < 90) {
+          return "4 - Anaerobic Endurance";
+        } else {
+          // Maximum performance capacity
+          return "5 - VO2 max";
+        }
+      } else {
+        return HEART_RATE_UNIT;
+      }
+      break;
     case FIELD_CADENCE: return "rpm"; break;
     case FIELD_TEMPERATURE: return s_data.unitsTemperature; break;
     case FIELD_TIME: return ""; break;
