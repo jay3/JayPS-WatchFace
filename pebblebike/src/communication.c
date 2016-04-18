@@ -401,7 +401,7 @@ void communication_in_received_callback(DictionaryIterator *iter, void *context)
               // s_data.refresh_code == 3 => _refresh_interval [5;+inf
               reset_data_timer = app_timer_register(s_data.refresh_code == 3 ? 60000 : 20000, reset_data_timer_callback, NULL);
 
-              screen_map_update_location();
+              //screen_map_update_location();
 
               if (s_data.data_subpage != SUBPAGE_UNDEF) {
                   layer_mark_dirty(s_data.page_data);

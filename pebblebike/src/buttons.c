@@ -56,7 +56,7 @@ void handle_topbutton_click(ClickRecognizerRef recognizer, void *context) {
     screen_live_menu(true);
 #endif
   } else if (config_screen != CONFIG_SCREEN_DISABLED) {
-    config_change_type(CONFIG_CHANGE_TYPE_PREVIOUS);
+    //config_change_type(CONFIG_CHANGE_TYPE_PREVIOUS);
   } else {
     if (s_data.state == STATE_STOP) {
         send_cmd(PLAY_PRESS);
@@ -68,7 +68,7 @@ void handle_topbutton_click(ClickRecognizerRef recognizer, void *context) {
 void handle_selectbutton_click(ClickRecognizerRef recognizer, void *context) {
   button_click();
   if (config_screen != CONFIG_SCREEN_DISABLED) {
-    config_change_field();
+    //config_change_field();
   } else {
     uint8_t prev_page_number = s_data.page_number;
     s_data.page_number++;
@@ -95,7 +95,7 @@ void handle_selectbutton_click(ClickRecognizerRef recognizer, void *context) {
       title_instead_of_units = true;
       screen_data_update_config(true);
     } else {
-      config_field_set_text(s_data.topbar_layer.field_center_layer, FIELD_TIME, GTextAlignmentCenter);
+      //config_field_set_text(s_data.topbar_layer.field_center_layer, FIELD_TIME, GTextAlignmentCenter);
     }
 
     if (prev_page_number == PAGE_LIVE_TRACKING) {
@@ -118,15 +118,15 @@ void handle_selectbutton_click(ClickRecognizerRef recognizer, void *context) {
 void handle_bottombutton_click(ClickRecognizerRef recognizer, void *context) {
   button_click();
   if (s_data.page_number == PAGE_MAP) {
-    screen_map_zoom_out(2);
+    //screen_map_zoom_out(2);
   } else if (s_data.page_number == PAGE_LIVE_TRACKING) {
 #ifdef ENABLE_FUNCTION_LIVE
     screen_live_menu(false);
 #endif
   } else if (config_screen != CONFIG_SCREEN_DISABLED) {
-    config_change_type(CONFIG_CHANGE_TYPE_NEXT);
+    //config_change_type(CONFIG_CHANGE_TYPE_NEXT);
   } else {
-    menu_show();
+    //menu_show();
   }
 #ifdef ENABLE_DEMO
 //  s_gpsdata.heartrate += 8;
@@ -143,12 +143,12 @@ void handle_selectbutton_longclick(ClickRecognizerRef recognizer, void *context)
 void handle_bottombutton_longclick(ClickRecognizerRef recognizer, void *context) {
   button_click();
   if (s_data.page_number == PAGE_MAP) {
-    screen_map_zoom_in(2);
+    //screen_map_zoom_in(2);
   } else if (s_data.page_number == PAGE_DATA || s_data.page_number == PAGE_ALTITUDE) {
     if (config_screen == CONFIG_SCREEN_DISABLED) {
-      config_start();
+      //config_start();
     } else {
-      config_stop();
+      //config_stop();
       buttons_update();
       action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, menu_button);
     }
@@ -157,9 +157,9 @@ void handle_bottombutton_longclick(ClickRecognizerRef recognizer, void *context)
 void handle_backbutton_click(ClickRecognizerRef recognizer, void *context) {
   button_click();
   if (config_screen != CONFIG_SCREEN_DISABLED) {
-    config_stop();
-    buttons_update();
-    action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, menu_button);
+    //config_stop();
+    //buttons_update();
+    //action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, menu_button);
   } else {
     // do nothing
     // just prevent to leave the app

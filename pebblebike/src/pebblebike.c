@@ -150,7 +150,7 @@ void bt_callback(bool connected) {
 }
 
 static void init(void) {
-  config_load();
+  //config_load();
 
 #ifdef ENABLE_LOCALIZE
   locale_init();
@@ -229,7 +229,7 @@ static void init(void) {
 #ifdef ENABLE_FUNCTION_LIVE
   screen_live_layer_init(s_data.window);
 #endif
-  screen_map_layer_init(s_data.window);
+  //screen_map_layer_init(s_data.window);
 
   #ifdef PRODUCTION
     #ifndef ENABLE_DEMO
@@ -238,7 +238,7 @@ static void init(void) {
   #endif
 
   action_bar_init(s_data.window);
-  menu_init();
+  //menu_init();
 
   // Reduce the sniff interval for more responsive messaging at the expense of
   // increased energy consumption by the Bluetooth module
@@ -275,10 +275,10 @@ static void deinit(void) {
 #ifdef ENABLE_FUNCTION_LIVE
   screen_live_layer_deinit();
 #endif
-  screen_map_layer_deinit();
+  //screen_map_layer_deinit();
 
   action_bar_deinit();
-  menu_deinit();
+  //menu_deinit();
 
   buttons_deinit();
 

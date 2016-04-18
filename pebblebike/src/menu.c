@@ -79,7 +79,7 @@ void menu_reset_data_callback(int index, void *context)
 }
 void menu_configure_screen(int index, void *context)
 {
-  config_start();
+  //config_start();
   window_stack_pop(true);
 }
 void init_settings_window()

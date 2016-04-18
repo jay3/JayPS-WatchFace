@@ -29,7 +29,7 @@ void update_screens() {
     window_set_background_color(s_data.window, BG_COLOR_MAP);
     layer_set_hidden(s_data.page_map, false);
     layer_mark_dirty(s_data.page_map); // TODO: really needed?
-    screen_map_update_map(true); // TODO: really needed?
+    //screen_map_update_map(true); // TODO: really needed?
     //vibes_short_pulse();
   }
 }
@@ -143,7 +143,7 @@ void action_bar_init(Window* window) {
   // Initialize the action bar:
   action_bar = action_bar_layer_create();
   action_bar_layer_add_to_window(action_bar, window);
-  action_bar_layer_set_click_config_provider(action_bar, click_config_provider);
+  //action_bar_layer_set_click_config_provider(action_bar, click_config_provider);
 
   action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, start_button);
   action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, next_button);
