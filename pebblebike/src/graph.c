@@ -119,7 +119,7 @@ void graph_draw(GContext* ctx, GRect bounds, GraphData* graph, GraphRange* color
       int height = (graph->points[i] - min) * coeff100 / 100;
       //APP_LOG(APP_LOG_LEVEL_DEBUG, "%d: pts=%d height=%d", i, graph->points[i], height);
       for (int j = 0; j <= (int) (height / GRAPH_BLOCK_SIZE); j++) {
-#ifndef PBL_PLATFORM_APLITE
+#ifdef PBL_COLOR
         GColor color = GColorWhite;
         for (int k = 0; k < nb_colors; k++) {
           if (stacked) {
