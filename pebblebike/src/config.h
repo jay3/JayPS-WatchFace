@@ -48,6 +48,8 @@
   // save memory on APLITE (1050 bytes)
   #define ENABLE_FUNCTION_LIVE
   #define ENABLE_MENU_HEART_ZONES
+  // don't deinit objects in deinit -- save at least 700 bytes
+  #define ENABLE_APP_DEINIT
 #endif
 
 #ifdef ENABLE_LOGS
