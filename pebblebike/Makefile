@@ -4,6 +4,7 @@
 
 VERSION=$(shell cat package.json | grep version | grep -o "[0-9][0-9]*\.[0-9][0-9]*")
 NAME=$(shell cat package.json | grep '"name":' | head -1 | sed 's/,//g' |sed 's/"//g' | awk '{ print $2 }')
+DOCKER_IMAGE=jayps-watchface
 
 all: build install
 
@@ -26,11 +27,22 @@ log:
 travis_build: init_overlays
 	yes | ~/pebble-dev/${PEBBLE_SDK}/bin/pebble build
 
+docker-build-image:
+	docker build -t $(DOCKER_IMAGE) .
+
+docker-shell:
+	docker run --rm -it -v $(shell pwd)/:/pebble/ $(DOCKER_IMAGE)
+
+build-in-docker: docker-build-image
+	docker run --rm -v $(shell pwd)/:/pebble/ $(DOCKER_IMAGE) make build
+
 install:
 	pebble install --emulator $(PEBBLE_EMULATOR)
 
 clean:
-	pebble clean
+	# works without pebble bin (ex: only installed inside docker)
+	rm -rf build/
+	-pebble clean
 
 size:
 	pebble analyze-size
